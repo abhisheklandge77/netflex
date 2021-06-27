@@ -1,0 +1,49 @@
+.network-model-container {
+width: 100%;
+border: 1px solid red;
+display: flex;
+flex-direction: column;
+}
+.title{
+    width: 80%;
+    margin: 0 auto;
+    text-align: left;
+}
+.title h2{
+    color: red;
+    font-weight: 600;
+}
+.main-container{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    // border: 1px solid blue;
+}
+.text-field .MuiOutlinedInput-root{
+    padding: 0px 220px;
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    // border: 1px solid green;
+}
+.region-input-container {
+    display: flex;
+    flex-direction: column;
+    }
+.inline-text-fields{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.add-icon{
+    background-color: #fff;
+    color : rgb(15, 56, 168);
+}
+.delete-icon{
+    background-color: #fff;
+    color : rgb(15, 56, 168);;
+}

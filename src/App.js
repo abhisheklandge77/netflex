@@ -1,23 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
+import NetworkModel from './components/NetworModel';
 
 function App() {
+  const props = {
+    title : "Network Model Information",
+    networkTypes : [{typeName : 'Regional'},{typeName :'abc'},{typeName :'xyz'},{typeName :'pqr'}],
+    networkProductType : [{name : 'New'},{name :'Old'}],
+    networkIDType : [{type : 'Network Product'},{type :'ABC'},{type :'XYZ'}],
+    idList : [{id : '12345'},{id : '23456'},{id : '34567'}],
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NetworkModel {...props}/>
     </div>
   );
 }
