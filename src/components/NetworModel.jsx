@@ -3,31 +3,32 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Checkbox, FormControlLabel, Typography } from "@material-ui/core";
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import RegionInput from './RegionInput';
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import RegionInput from "./RegionInput";
 import "./component.scss";
 
 function NetworkModelInfo(props) {
-  const {
-    title,
-    networkTypes,
-    networkProductType,
-    networkIDType,
-    idList,
-  } = props;
+  const { title, networkTypes, networkProductType, networkIDType, idList } =
+    props;
 
-  const [ items,setItems ] = React.useState([
-      {regionType : [{type : 'Geographic',region : 'NorthEast'},{type :'ABC',region:'abc'},{type :'XYZ',region:'xyz'}]},
-]);
+  const [items, setItems] = React.useState([
+    {
+      regionType: [
+        { type: "Geographic", region: "NorthEast" },
+        { type: "ABC", region: "abc" },
+        { type: "XYZ", region: "xyz" },
+      ],
+    },
+  ]);
 
-  const onAddBtnClick =()=> {
-      items.push(items[0]);
-      setItems([...items]);
-  }
-  const onDeleteBtnClick =(id)=> {
-    items.splice(id,1);
+  const onAddBtnClick = () => {
+    items.push(items[0]);
     setItems([...items]);
-}
+  };
+  const onDeleteBtnClick = (id) => {
+    items.splice(id, 1);
+    setItems([...items]);
+  };
   const [checked, setChecked] = React.useState();
 
   const handleChange = (event) => {
@@ -41,33 +42,35 @@ function NetworkModelInfo(props) {
         </Grid>
         <Grid className="main-container">
           <div className="container">
-            <Grid item xs={6}>
+            <Grid item className="text-container">
               <TextField
                 label="Network Model Name *"
-                className="text-field"
                 variant="outlined"
+                className="text-field"
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item className="text-container">
               <Autocomplete
                 options={networkTypes}
+                className="text-field"
                 getOptionLabel={(type) => type.typeName}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     label="Network Model Type *"
                     variant="outlined"
-                    className="text-field"
+                    
                   />
                 )}
               />
             </Grid>
           </div>
           <div className="container">
-            <Grid item xs={6}>
+            <Grid item className="text-container">
               <Autocomplete
                 options={networkProductType}
                 getOptionLabel={(type) => type.name}
+                className="text-field"
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -77,7 +80,7 @@ function NetworkModelInfo(props) {
                 )}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item className="text-container">
               <TextField
                 label="Target Effective Date *"
                 type="date"
@@ -90,7 +93,7 @@ function NetworkModelInfo(props) {
             </Grid>
           </div>
           <div className="inline-text-fields">
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <Autocomplete
                 options={networkIDType}
                 getOptionLabel={(idType) => idType.type}
@@ -103,14 +106,14 @@ function NetworkModelInfo(props) {
                 )}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <TextField
                 label="Network Product ID *"
                 className="text-field"
                 variant="outlined"
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <Autocomplete
                 multiple
                 id="tags-outlined"
@@ -119,9 +122,6 @@ function NetworkModelInfo(props) {
                 filterSelectedOptions
                 renderInput={(params) => (
                   <TextField
-
-
-
                     {...params}
                     variant="outlined"
                     label="List ID(s)"
@@ -129,29 +129,29 @@ function NetworkModelInfo(props) {
                 )}
               />
             </Grid>
-            <Grid item xs={3}>
-              <TextField variant="outlined" type="file" />
+            <Grid item>
+              <TextField variant="outlined" type="file" className="file-input"/>
             </Grid>
-            <Grid><DeleteOutlineIcon /></Grid>
+            <Grid>
+              <DeleteOutlineIcon />
+            </Grid>
           </div>
-          {
-              items.map((item, index) => {
-                  const props = {
-                    id: index,
-                    regionType : item.regionType,
-                    region : item.regionType.region,
-                    onAddBtnClick,
-                    onDeleteBtnClick
-                  }
-                  return <RegionInput {...props}/>
-              })
-          }
-          <Grid>
+          {items.map((item, index) => {
+            const props = {
+              id: index,
+              regionType: item.regionType,
+              region: item.regionType.region,
+              onAddBtnClick,
+              onDeleteBtnClick,
+            };
+            return <RegionInput {...props} />;
+          })}
+          <Grid className="text">
             <Typography>
               Please select network utilization parameters (all that apply)
             </Typography>
           </Grid>
-          <div>
+          <div className="checkbox-container">
             <FormControlLabel
               control={
                 <Checkbox
@@ -198,13 +198,13 @@ function NetworkModelInfo(props) {
             />
           </div>
           <Grid item xs={12}>
-              <TextField
-                label="Description"
-                variant="outlined"
-                placeholder="Type here..."
-                className="text-field"
-              />
-            </Grid>
+            <TextField
+              label="Description"
+              variant="outlined"
+              placeholder="Type here..."
+              className="text-field"
+            />
+          </Grid>
         </Grid>
       </Grid>
     </div>
