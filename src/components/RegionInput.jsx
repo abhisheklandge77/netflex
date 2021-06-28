@@ -7,33 +7,26 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import "./component.scss";
 
 function RegionInput(props) {
-  const { regionType,region,onAddBtnClick,id,onDeleteBtnClick } = props;
-  const [regval,setRegVal] = React.useState('');
-
-  const handleRegionChange = () => {
-    setRegVal(region);
-  }
-
+  const { regionType,onAddBtnClick,id,onDeleteBtnClick } = props;
   return (
     <div>
       <Grid container className="region-input-container">
         <div className="inline-text-fields">
         <AddCircleIcon className="add-icon" onClick={onAddBtnClick}/>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <Autocomplete
               options={regionType}
               getOptionLabel={(region) => region.type}
               renderInput={(params) => (
-                <TextField {...params} label="Region Type" onChange={handleRegionChange} variant="outlined" />
+                <TextField {...params} label="Region Type" variant="outlined" />
               )}
             />
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={8}>
             <TextField
               label="Region"
               className="text-field"
               variant="outlined"
-              value={regval}
             />
           </Grid>
           {id>0 ? <HighlightOffIcon className="delete-icon" onClick={() => onDeleteBtnClick(id)}/> : ''}

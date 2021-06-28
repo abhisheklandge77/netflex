@@ -18,48 +18,65 @@
   width: 80%;
   margin: 0 auto;
 }
-.text-container{
-    width: 95%;
-}
-.text-field{
-    width: 100%;
+.text-field {
+  width: 100%;
+  text-align: left;
+  .field {
+    width: 94%;
+  }
 }
 .container {
   display: flex;
-  justify-content: space-around;
   margin-bottom: 30px;
   width: 100%;
 }
 .region-input-container {
   display: flex;
   flex-direction: column;
+  padding-right: 20px;
 }
 .inline-text-fields {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
-  width: 100%;
+  width: 99%;
 }
-.file-input input{
-    padding-right: 40px;
+.list-input{
+.MuiChip-root{
+    color: #fff;
+    background-color: #1684de;
+    .MuiChip-deleteIcon{
+        color : #fff;
+    }
+}
+}
+.file-input input {
+  padding-right: 40px;
 }
 .add-icon {
   background-color: #fff;
-  color: rgb(15, 56, 168);
+  color: #1684de;
 }
 .delete-icon {
   background-color: #fff;
-  color: rgb(15, 56, 168);
+  color: #1684de;
 }
-.text{
-    display: flex;
-    align-items: left;
-    padding-left: 2%;
+.text {
+  display: flex;
+  align-items: left;
 }
-.checkbox-container{
-    display: flex;
-    align-items: left;
-    padding-left: 2%; 
-    margin-bottom: 30px;
+.checkbox-container {
+  display: flex;
+  align-items: left;
+  margin-bottom: 30px;
+  .MuiCheckbox-colorPrimary.Mui-checked{
+      color: #1684de;
+  }
+}
+.description-field{
+    width: 97%;
+}
+.description{
+   width: 100%;
 }

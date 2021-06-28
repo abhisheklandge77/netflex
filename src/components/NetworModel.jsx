@@ -42,54 +42,61 @@ function NetworkModelInfo(props) {
         </Grid>
         <Grid className="main-container">
           <div className="container">
-            <Grid item className="text-container">
-              <TextField
-                label="Network Model Name *"
-                variant="outlined"
-                className="text-field"
-              />
+            <Grid item xs={7}>
+              <div className="text-field">
+                <TextField
+                  label="Network Model Name *"
+                  variant="outlined"
+                  className="field"
+                />
+              </div>
             </Grid>
-            <Grid item className="text-container">
-              <Autocomplete
-                options={networkTypes}
-                className="text-field"
-                getOptionLabel={(type) => type.typeName}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Network Model Type *"
-                    variant="outlined"
-                    
-                  />
-                )}
-              />
+            <Grid item xs={7}>
+              <div className="text-field">
+                <Autocomplete
+                  options={networkTypes}
+                  className="field"
+                  getOptionLabel={(type) => type.typeName}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Network Model Type *"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </div>
             </Grid>
           </div>
           <div className="container">
-            <Grid item className="text-container">
-              <Autocomplete
-                options={networkProductType}
-                getOptionLabel={(type) => type.name}
-                className="text-field"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Network Product Change Type *"
-                    variant="outlined"
-                  />
-                )}
-              />
+            <Grid item xs={7}>
+              <div className="text-field">
+                <Autocomplete
+                  options={networkProductType}
+                  getOptionLabel={(type) => type.name}
+                  className="field"
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Network Product Change Type *"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </div>
             </Grid>
-            <Grid item className="text-container">
-              <TextField
-                label="Target Effective Date *"
-                type="date"
-                className="text-field"
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+            <Grid item xs={7}>
+              <div className="text-field">
+                <TextField
+                  label="Target Effective Date *"
+                  type="date"
+                  className="field"
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </div>
             </Grid>
           </div>
           <div className="inline-text-fields">
@@ -125,12 +132,17 @@ function NetworkModelInfo(props) {
                     {...params}
                     variant="outlined"
                     label="List ID(s)"
+                    className="list-input"
                   />
                 )}
               />
             </Grid>
             <Grid item>
-              <TextField variant="outlined" type="file" className="file-input"/>
+              <TextField
+                variant="outlined"
+                type="file"
+                className="file-input"
+              />
             </Grid>
             <Grid>
               <DeleteOutlineIcon />
@@ -198,12 +210,14 @@ function NetworkModelInfo(props) {
             />
           </div>
           <Grid item xs={12}>
+              <div className="description-field">
             <TextField
               label="Description"
               variant="outlined"
               placeholder="Type here..."
-              className="text-field"
+              className="description"
             />
+            </div>
           </Grid>
         </Grid>
       </Grid>
