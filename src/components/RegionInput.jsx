@@ -2,17 +2,17 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import "./component.scss";
 
 function RegionInput(props) {
-  const { regionType,onAddBtnClick,id,onDeleteBtnClick } = props;
+  const { regionType, onAddBtnClick, id, onDeleteBtnClick } = props;
   return (
     <div>
       <Grid container className="region-input-container">
         <div className="inline-text-fields">
-        <AddCircleIcon className="add-icon" onClick={onAddBtnClick}/>
+          <AddCircleIcon className="add-icon" onClick={onAddBtnClick} />
           <Grid item xs={4}>
             <Autocomplete
               options={regionType}
@@ -29,7 +29,14 @@ function RegionInput(props) {
               variant="outlined"
             />
           </Grid>
-          {id>0 ? <HighlightOffIcon className="delete-icon" onClick={() => onDeleteBtnClick(id)}/> : ''}
+          {id > 0 ? (
+            <HighlightOffIcon
+              className="delete-icon"
+              onClick={() => onDeleteBtnClick(id)}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </Grid>
     </div>
