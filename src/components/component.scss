@@ -1,86 +1,241 @@
 .network-model-container {
-  width: 100%;
+  width: 82%;
+  // max-height: 65vh;
+  // overflow: auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-
   .title {
-    width: 80%;
-    margin: 0 auto;
     text-align: left;
+    padding-left: 25px;
+    padding-right: 25px;
   }
   .title h2 {
     color: red;
     font-weight: 600;
-  }
-  .main-container {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    max-height: 65vh;
-    overflow: auto;
-    margin: 0 auto;
-    padding-top: 10px;
-  }
-  .text-field {
-    width: 100%;
-    text-align: left;
-    .field {
-      width: 94%;
-    }
+    background-color: #f5f2f2;
   }
   .container {
     display: flex;
+    justify-content: space-between;
+    padding-left: 25px;
+    padding-right: 25px;
     margin-bottom: 30px;
-    width: 100%;
-  }
-  .region-input-container {
-    display: flex;
-    flex-direction: column;
-    padding-right: 20px;
-  }
-  .inline-text-fields {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-    width: 99%;
-  }
-  .list-input {
-    .MuiChip-root {
-      color: #fff;
-      background-color: #1684de;
-      .MuiChip-deleteIcon {
-        color: #fff;
+    .text-field {
+      width: 47%;
+      .field {
+        width: 100%;
+      }
+      .margin-field {
+        margin-bottom: 30px;
       }
     }
   }
-  .file-input input {
-    padding-right: 40px;
-  }
-  .add-icon {
-    background-color: #fff;
-    color: #1684de;
-  }
-  .delete-icon {
-    background-color: #fff;
-    color: #1684de;
-  }
-  .text {
-    display: flex;
-    align-items: left;
-  }
-  .checkbox-container {
-    display: flex;
-    align-items: left;
+  .inline-text-fields {
+    width: 100%;
+    padding-left: 25px;
     margin-bottom: 30px;
-    .MuiCheckbox-colorPrimary.Mui-checked {
-      color: #1684de;
+    display: flex;
+    align-items: center;
+    .network-id-field {
+      width: 18%;
+      .field {
+        width: 100%;
+      }
+    }
+    .product-id-field {
+      width: 30%;
+      .field {
+        width: 100%;
+      }
+    }
+    .list-id-field {
+      width: 30%;
+      .field {
+        width: 100%;
+      }
+      .MuiChip-root {
+        color: #fff;
+        background-color: #1684de;
+        .MuiChip-deleteIcon {
+          color: #fff;
+        }
+      }
+    }
+    .file-input {
+      width: 18.5%;
+      .field {
+        width: 100%;
+      }
     }
   }
-  .description-field {
-    width: 97%;
-  }
-  .description {
+  .region-input-container {
     width: 100%;
+    margin-bottom: 30px;
+    .inline-text-fields-first {
+      padding-right: 25px;
+      display: flex;
+      align-items: center;
+      .region-type-field {
+        width: 40%;
+        .field {
+          width: 100%;
+        }
+      }
+      .region-field {
+        width: 60%;
+        .field {
+          width: 100%;
+        }
+      }
+      .add-icon {
+        background-color: #fff;
+        color: #1684de;
+      }
+    }
+    .inline-text-fields {
+      display: flex;
+      align-items: center;
+      .region-type-field {
+        width: 38.5%;
+        .field {
+          width: 100%;
+        }
+      }
+      .region-field {
+        width: 58%;
+        .field {
+          width: 100%;
+        }
+      }
+      .delete-icon {
+        background-color: #fff;
+        color: #1684de;
+      }
+    }
+  }
+  .text {
+    text-align: left;
+    padding-left: 25px;
+    margin-bottom: 20px;
+  }
+  .checkbox-container {
+    width: 100%;
+    padding-left: 25px;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  .description-field {
+    width: 96.5%;
+    margin-bottom: 20px;
+    padding-left: 25px;
+    .field {
+      width: 100%;
+    }
+  }
+}
+.network-utilization-container {
+  width: 82%;
+  margin: 0 auto;
+  max-height: 65vh;
+  overflow: auto;
+  .title {
+    text-align: left;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .title h2 {
+    color: red;
+    font-weight: 600;
+    background-color: #f5f2f2;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 25px;
+    padding-right: 25px;
+    .text-field {
+      width: 47%;
+      // border: 1px solid green;
+      .field {
+        width: 100%;
+      }
+      .margin-field {
+        margin-bottom: 30px;
+      }
+    }
+  }
+  .checkbox-container {
+    text-align: left;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-bottom: 20px;
+  }
+  .pharmacy-information-container {
+    width: 100%;
+    .inline-text-fields-first {
+      padding-right: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 30px;
+      .id-type-field {
+        width: 25%;
+        .field {
+          width: 100%;
+        }
+      }
+      .id-field {
+        width: 50%;
+        .field {
+          width: 100%;
+        }
+      }
+      .file-input {
+        width: 25%;
+        .field {
+          width: 100%;
+        }
+      }
+      .add-icon {
+        background-color: #fff;
+        color: #1684de;
+      }
+      .delete-icon {
+        background-color: #fff;
+        color: #1684de;
+      }
+    }
+    .inline-text-fields {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding-left: 25px;
+      margin-bottom: 30px;
+      .id-type-field {
+        width: 25%;
+        .field {
+          width: 100%;
+        }
+      }
+      .id-field {
+        width: 50%;
+        .field {
+          width: 100%;
+        }
+      }
+      .file-input {
+        width: 25%;
+        .field {
+          width: 100%;
+        }
+      }
+      .delete-icon {
+        background-color: #fff;
+        color: #1684de;
+      }
+    }
   }
 }

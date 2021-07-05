@@ -7,26 +7,30 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import "./component.scss";
 
 function RegionInput(props) {
-  const { regionType, onAddBtnClick, id, onDeleteBtnClick } = props;
+  const {  id,regionType, onAddBtnClick, onDeleteBtnClick } = props;
   return (
     <div>
-      <Grid container className="region-input-container">
-        <div className="inline-text-fields">
-          <AddCircleIcon className="add-icon" onClick={onAddBtnClick} />
-          <Grid item xs={4}>
+      <Grid className="region-input-container">
+        <div className={id===0 ? "inline-text-fields-first" : "inline-text-fields"}>
+          {id === 0 ? <AddCircleIcon className="add-icon" onClick={onAddBtnClick} /> : ''}
+          <Grid className="region-type-field">
             <Autocomplete
               options={regionType}
               getOptionLabel={(region) => region.type}
+              className="field"
               renderInput={(params) => (
-                <TextField {...params} label="Region Type" variant="outlined" />
+                <TextField {...params} label="Region Type" size="small" variant="outlined" />
               )}
             />
           </Grid>
-          <Grid item xs={8}>
-            <TextField
-              label="Region"
-              className="text-field"
-              variant="outlined"
+          <Grid className="region-field">
+          <Autocomplete
+              options={regionType}
+              className="field"
+              getOptionLabel={(region) => region.region}
+              renderInput={(params) => (
+                <TextField {...params} label="Region Type" size="small" variant="outlined" />
+              )}
             />
           </Grid>
           {id > 0 ? (

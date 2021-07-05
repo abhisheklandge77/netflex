@@ -8,8 +8,8 @@ import RegionInput from "./RegionInput";
 import "./component.scss";
 
 function NetworkModelInfo(props) {
-  const { title, networkTypes, networkProductType, networkIDType, idList } =
-    props;
+  const { fields, title, onFieldChange } = props;
+  const { networkModelName,networkModelType,networkProductType,targetEffectiveDate,networkIdType,networkProductId,idList,networkUtilizationParameters,description } = fields;
 
   const [items, setItems] = React.useState([
     {
@@ -21,6 +21,12 @@ function NetworkModelInfo(props) {
     },
   ]);
 
+  const handleCheckboxChange = (event) => {
+    const {path, name, checked, type} = event.target;
+    console.log(path, name, checked);
+    onFieldChange(`${networkUtilizationParameters.path}-${name}`, checked, type);
+  };
+
   const onAddBtnClick = () => {
     items.push(items[0]);
     setItems([...items]);
@@ -29,196 +35,254 @@ function NetworkModelInfo(props) {
     items.splice(id, 1);
     setItems([...items]);
   };
-  const [checked, setChecked] = React.useState();
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
   return (
     <div>
-      <Grid container className="network-model-container">
-        <Grid className="title">
+      <Grid className="network-model-container">
+        <div className="title">
           <h2>{title}</h2>
+        </div>
+        <div className="container">
+          <Grid className="text-field">
+            <TextField
+              label="Network Model Name *"
+              variant="outlined"
+              className="field"
+              size="small"
+              path={networkModelName.path}
+              value={networkModelName.value}
+              helperText={networkModelName.errorMsg}
+              error={networkModelName.errorMsg ? true : false}
+              onChange={(e) => {
+                onFieldChange(networkModelName.path, e.target.value);
+              }}
+            />
+          </Grid>
+          <Grid className="text-field">
+            <Autocomplete
+              options={networkModelType.valueList}
+              className="field"
+              defaultValue={networkModelType.value}
+              path={networkModelType.path}
+              getOptionLabel={(option) => option.type}
+              onChange={(e,value) => {
+                onFieldChange(networkModelType.path,value);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Network Model Type *"
+                  variant="outlined"
+                  size="small"
+                  value={networkModelType.value}
+                  helperText={networkModelType.errorMsg}
+                  error={networkModelType.errorMsg ? true : false}
+                />
+              )}
+            />
+          </Grid>
+        </div>
+        <div className="container">
+          <Grid className="text-field">
+            <Autocomplete
+              options={networkProductType.valueList}
+              getOptionLabel={(option) => option.type}
+              path={networkProductType.path}
+              defaultValue={networkProductType.value}
+              onChange={(e,value) => {
+                onFieldChange(networkProductType.path,value);
+              }}
+              className="field"
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Network Product Change Type *"
+                  variant="outlined"
+                  size="small"
+                  helperText={networkProductType.errorMsg}
+                  error={networkProductType.errorMsg ? true : false}
+                />
+              )}
+            />
+          </Grid>
+          <Grid className="text-field">
+            <TextField
+              label="Target Effective Date *"
+              type="date"
+              className="field"
+              size="small"
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              path={targetEffectiveDate.path}
+              value={targetEffectiveDate.value}
+              helperText={targetEffectiveDate.errorMsg}
+              error={targetEffectiveDate.errorMsg ? true : false}
+              onChange={(e) => {
+                onFieldChange(targetEffectiveDate.path, e.target.value);
+              }}
+            />
+          </Grid>
+        </div>
+        <div className="inline-text-fields">
+          <Grid className="network-id-field">
+            <Autocomplete
+              options={networkIdType.valueList}
+              getOptionLabel={(option) => option.type}
+              path={networkIdType.path}
+              defaultValue={networkIdType.value}
+              onChange={(e,value) => {
+                onFieldChange(networkIdType.path,value);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Network ID Type *"
+                  variant="outlined"
+                  className="field"
+                  size="small"
+                  helperText={networkIdType.errorMsg}
+                  error={networkIdType.errorMsg ? true : false}
+                />
+              )}
+            />
+          </Grid>
+          <Grid className="product-id-field">
+            <TextField
+              label="Network Product ID *"
+              className="field"
+              variant="outlined"
+              size="small"
+              path={networkProductId.path}
+              value={networkProductId.value}
+              helperText={networkProductId.errorMsg}
+              error={networkProductId.errorMsg ? true : false}
+              onChange={(e) => {
+                onFieldChange(networkProductId.path, e.target.value);
+              }}
+            />
+          </Grid>
+          <Grid className="list-id-field">
+            <Autocomplete
+              multiple
+              id="tags-outlined"
+              className="field"
+              options={idList.valueList}
+              getOptionLabel={(list) => list.id}
+              path={idList.path}
+              onChange={(e,value) => {
+                onFieldChange(idList.path,value);
+              }}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  size="small"
+                  label="List ID(s)"
+                  helperText={idList.errorMsg}
+                  error={idList.errorMsg ? true : false}
+                />
+              )}
+            />
+          </Grid>
+          <Grid className="file-input">
+            <TextField
+              variant="outlined"
+              type="file"
+              size="small"
+              className="field"
+            />
+          </Grid>
+          <Grid>
+            <DeleteOutlineIcon />
+          </Grid>
+        </div>
+        {items.map((item, index) => {
+          const props = {
+            id: index,
+            regionType: item.regionType,
+            onAddBtnClick,
+            onDeleteBtnClick,
+          };
+          return <RegionInput {...props} />;
+        })}
+        <Grid className="text">
+          <Typography>
+            Please select network utilization parameters (all that apply)
+          </Typography>
         </Grid>
-        <Grid className="main-container">
-          <div className="container">
-            <Grid item xs={7}>
-              <div className="text-field">
-                <TextField
-                  label="Network Model Name *"
-                  variant="outlined"
-                  className="field"
-                />
-              </div>
-            </Grid>
-            <Grid item xs={7}>
-              <div className="text-field">
-                <Autocomplete
-                  options={networkTypes}
-                  className="field"
-                  getOptionLabel={(type) => type.typeName}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Network Model Type *"
-                      variant="outlined"
-                    />
-                  )}
-                />
-              </div>
-            </Grid>
-          </div>
-          <div className="container">
-            <Grid item xs={7}>
-              <div className="text-field">
-                <Autocomplete
-                  options={networkProductType}
-                  getOptionLabel={(type) => type.name}
-                  className="field"
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Network Product Change Type *"
-                      variant="outlined"
-                    />
-                  )}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={7}>
-              <div className="text-field">
-                <TextField
-                  label="Target Effective Date *"
-                  type="date"
-                  className="field"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </div>
-            </Grid>
-          </div>
-          <div className="inline-text-fields">
-            <Grid item xs={4}>
-              <Autocomplete
-                options={networkIDType}
-                getOptionLabel={(idType) => idType.type}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Network ID Type *"
-                    variant="outlined"
-                  />
-                )}
+        <div className="checkbox-container">
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                path={networkUtilizationParameters.path}
+                checked={networkUtilizationParameters.value.claim}
+                type="checkbox"
+                onChange={handleCheckboxChange}
+                name="claim"
+                color="primary"
               />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                label="Network Product ID *"
-                className="text-field"
-                variant="outlined"
+            }
+            label="Claim"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                path={networkUtilizationParameters.path}
+                checked={networkUtilizationParameters.value.eligibility}
+                type="checkbox"
+                onChange={handleCheckboxChange}
+                name="eligibility"
+                color="primary"
               />
-            </Grid>
-            <Grid item xs={4}>
-              <Autocomplete
-                multiple
-                id="tags-outlined"
-                options={idList}
-                getOptionLabel={(list) => list.id}
-                filterSelectedOptions
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    label="List ID(s)"
-                    className="list-input"
-                  />
-                )}
+            }
+            label="Eligibility"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                path={networkUtilizationParameters.path}
+                checked={networkUtilizationParameters.value.pharmacy}
+                type="checkbox"
+                onChange={handleCheckboxChange}
+                name="pharmacy"
+                color="primary"
               />
-            </Grid>
-            <Grid item>
-              <TextField
-                variant="outlined"
-                type="file"
-                className="file-input"
+            }
+            label="Pharmacy"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                path={networkUtilizationParameters.path}
+                checked={networkUtilizationParameters.value.pharmacyUtilization}
+                type="checkbox"
+                onChange={handleCheckboxChange}
+                name="pharmacyUtilization"
+                color="primary"
               />
-            </Grid>
-            <Grid>
-              <DeleteOutlineIcon />
-            </Grid>
-          </div>
-          {items.map((item, index) => {
-            const props = {
-              id: index,
-              regionType: item.regionType,
-              region: item.regionType.region,
-              onAddBtnClick,
-              onDeleteBtnClick,
-            };
-            return <RegionInput {...props} />;
-          })}
-          <Grid className="text">
-            <Typography>
-              Please select network utilization parameters (all that apply)
-            </Typography>
-          </Grid>
-          <div className="checkbox-container">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={checked}
-                  onChange={handleChange}
-                  name="Claim"
-                  color="primary"
-                />
-              }
-              label="Claim"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={checked}
-                  onChange={handleChange}
-                  name="Claim"
-                  color="primary"
-                />
-              }
-              label="Eligibility"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={checked}
-                  onChange={handleChange}
-                  name="Claim"
-                  color="primary"
-                />
-              }
-              label="Pharmacy"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={checked}
-                  onChange={handleChange}
-                  name="Claim"
-                  color="primary"
-                />
-              }
-              label="Pharmacy Utilization"
+            }
+            label="Pharmacy Utilization"
+          />
+        </div>
+        <Grid item xs={12}>
+          <div className="description-field">
+            <TextField
+              label="Description"
+              variant="outlined"
+              placeholder="Type here..."
+              className="field"
+              size="small"
+              path={description.path}
+              value={description.value}
+              onChange={(e) => {
+                onFieldChange(description.path, e.target.value);
+              }}
             />
           </div>
-          <Grid item xs={12}>
-            <div className="description-field">
-              <TextField
-                label="Description"
-                variant="outlined"
-                placeholder="Type here..."
-                className="description"
-              />
-            </div>
-          </Grid>
         </Grid>
       </Grid>
     </div>
