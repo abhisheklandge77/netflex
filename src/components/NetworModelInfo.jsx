@@ -8,32 +8,14 @@ import RegionInput from "./RegionInput";
 import "./component.scss";
 
 function NetworkModelInfo(props) {
-  const { fields, title, onFieldChange } = props;
-  const { networkModelName,networkModelType,networkProductType,targetEffectiveDate,networkIdType,networkProductId,idList,networkUtilizationParameters,description } = fields;
-
-  const [items, setItems] = React.useState([
-    {
-      regionType: [
-        { type: "Geographic", region: "NorthEast" },
-        { type: "ABC", region: "abc" },
-        { type: "XYZ", region: "xyz" },
-      ],
-    },
-  ]);
+  const { fields, title, onFieldChange,onAddBtnClick,onDeleteBtnClick } = props;
+  const { networkModelName,networkModelType,networkProductType,targetEffectiveDate,networkIdType,networkProductId,idList,
+    regionInput,networkUtilizationParameters,description } = fields;
 
   const handleCheckboxChange = (event) => {
     const {path, name, checked, type} = event.target;
     console.log(path, name, checked);
     onFieldChange(`${networkUtilizationParameters.path}-${name}`, checked, type);
-  };
-
-  const onAddBtnClick = () => {
-    items.push(items[0]);
-    setItems([...items]);
-  };
-  const onDeleteBtnClick = (id) => {
-    items.splice(id, 1);
-    setItems([...items]);
   };
 
   return (
@@ -199,12 +181,13 @@ function NetworkModelInfo(props) {
             <DeleteOutlineIcon />
           </Grid>
         </div>
-        {items.map((item, index) => {
+        {regionInput.map((item, index) => {
           const props = {
             id: index,
-            regionType: item.regionType,
+            item,
             onAddBtnClick,
-            onDeleteBtnClick,
+            onFieldChange,
+            onDeleteBtnClick
           };
           return <RegionInput {...props} />;
         })}

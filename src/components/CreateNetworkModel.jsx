@@ -9,6 +9,8 @@ import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 import Check from "@material-ui/icons/Check";
 import NetworkModelInfo from "./NetworModelInfo";
 import NetworkUtilizationParameter from "./NetworkUtilizationParameter";
+import DisruptionReporting from "./DisruptionReporting";
+import Summary from "./Summary";
 import "./component.scss";
 import { makeStyles, StepConnector, withStyles } from "@material-ui/core";
 
@@ -29,16 +31,24 @@ function getSteps() {
   ];
 }
 
-function getStepContent(stepIndex, stepState,onFieldChange) {
+function getStepContent(stepIndex, stepState, onFieldChange, onAddBtnClick,onDeleteBtnClick) {
   switch (stepIndex) {
     case 0:
-      return <NetworkModelInfo onFieldChange={onFieldChange} title="NETWORK MODEL INFORMATION" {...stepState} />;
+      return (
+        <NetworkModelInfo
+          onFieldChange={onFieldChange}
+          onAddBtnClick={onAddBtnClick}
+          onDeleteBtnClick={onDeleteBtnClick}
+          title="NETWORK MODEL INFORMATION"
+          {...stepState}
+        />
+      );
     case 1:
       return <NetworkUtilizationParameter {...networkUtilizationProps} />;
     case 2:
-      return "Disruption Reporting";
+      return <DisruptionReporting />;
     case 3:
-      return "Review & Submit";
+      return <Summary />;
     default:
       return "Unknown Step";
   }
@@ -107,7 +117,7 @@ function DotIcon(props) {
     </div>
   );
 }
-const modelTypes=[
+const modelTypes = [
   { type: "Regional" },
   { type: "abc" },
   { type: "xyz" },
@@ -115,10 +125,10 @@ const modelTypes=[
 ];
 const networkProductType = [{ type: "New" }, { type: "Old" }];
 const networkIdType = [
-      { type: "Network Product",id : '1234' },
-      { type: "ABC" ,id : '5678'},
-      { type: "XYZ" ,id : '9087'},
-    ];
+  { type: "Network Product", id: "1234" },
+  { type: "ABC", id: "5678" },
+  { type: "XYZ", id: "9087" },
+];
 const idList = [{ id: "12345" }, { id: "23456" }, { id: "34567" }];
 
 class CreateNetworkModel extends React.Component {
@@ -126,108 +136,162 @@ class CreateNetworkModel extends React.Component {
     super(props);
     this.state = {
       activeStep: 0,
-      step1 : {
-        fields : {
-          networkModelName : {
-            path : 'networkModelName',
-            value : '',
-            errorMsg : '',
+      step1: {
+        fields: {
+          networkModelName: {
+            path: "networkModelName",
+            value: "",
+            errorMsg: "",
             required: true,
           },
-          networkModelType : {
-            path : 'networkModelType',
-            value : modelTypes[0],
-            valueList : modelTypes,
-            errorMsg : '',
+          networkModelType: {
+            path: "networkModelType",
+            value: modelTypes[0],
+            valueList: modelTypes,
+            errorMsg: "",
             required: true,
           },
-          networkProductType : {
-            path : 'networkProductType',
-            value : networkProductType[0],
-            valueList : networkProductType,
-            errorMsg : '',
+          networkProductType: {
+            path: "networkProductType",
+            value: networkProductType[0],
+            valueList: networkProductType,
+            errorMsg: "",
             required: true,
           },
-          targetEffectiveDate : {
-            path : 'targetEffectiveDate',
-            value : '',
-            errorMsg : '',
+          targetEffectiveDate: {
+            path: "targetEffectiveDate",
+            value: "",
+            errorMsg: "",
             required: true,
           },
-          networkIdType : {
-            path : 'networkIdType',
-            value : networkIdType[0],
-            valueList : networkIdType,
-            errorMsg : '',
+          networkIdType: {
+            path: "networkIdType",
+            value: networkIdType[0],
+            valueList: networkIdType,
+            errorMsg: "",
             required: true,
           },
-          networkProductId : {
-            path : 'networkProductId',
-            value : '',
-            errorMsg : '',
+          networkProductId: {
+            path: "networkProductId",
+            value: "",
+            errorMsg: "",
             required: true,
           },
-          idList : {
-            path : 'idList',
-            value : '',
-            valueList : idList,
-            errorMsg : '',
+          idList: {
+            path: "idList",
+            value: "",
+            valueList: idList,
+            errorMsg: "",
             required: true,
           },
-          networkUtilizationParameters : {
-            path : 'networkUtilizationParameters',
-            value:{
-            claim : false,
-            eligibility : false,
-            pharmacy : false,
-            pharmacyUtilization: false
-          }},
-          description : {
-            path : 'description',
-            value : '',
+          regionInput: [
+            {
+              path: "regionInput",
+              value: "",
+              errorMsg: "",
+              required: true,
+              regionType: [
+                { type: "Geographic", region: "NorthEast" },
+                { type: "ABC", region: "abc" },
+                { type: "XYZ", region: "xyz" },
+              ],
+            },
+          ],
+          networkUtilizationParameters: {
+            path: "networkUtilizationParameters",
+            value: {
+              claim: false,
+              eligibility: false,
+              pharmacy: false,
+              pharmacyUtilization: false,
+            },
           },
-        }
-      }
+          description: {
+            path: "description",
+            value: "",
+          },
+        },
+      },
     };
   }
   handleNext = () => {
-    this.setState(prevState => ({activeStep : prevState.activeStep + 1}));
+    this.setState((prevState) => ({ activeStep: prevState.activeStep + 1 }));
   };
 
   handleBack = () => {
-    this.setState(prevState => ({activeStep : prevState.activeStep - 1}));
+    this.setState((prevState) => ({ activeStep: prevState.activeStep - 1 }));
   };
 
   handleReset = () => {
-    this.setState({activeStep : 0});
+    this.setState({ activeStep: 0 });
   };
-  handleFieldChange = (path, value, type) => {
+  handleFieldChange = (path, value, type,id) => {
     const { activeStep } = this.state;
-      const stepKey = `step${activeStep+1}`;
-      const stepState = this.state[stepKey];
-      let fieldState;
-      if(type==='checkbox'){
-        const paths = path.split('-')
-        fieldState = stepState.fields[paths[0]];
-        fieldState.value[paths[1]] = value;
-      }else{
-        fieldState = stepState.fields[path];
-        fieldState.value = value;
+    const stepKey = `step${activeStep + 1}`;
+    const stepState = this.state[stepKey];
+    let fieldState;
+    if (type === "checkbox") {
+      const paths = path.split("-");
+      fieldState = stepState.fields[paths[0]];
+      fieldState.value[paths[1]] = value;
+    } 
+    else if(type === "multifield"){
+      fieldState = stepState.fields[path];
+      console.log('multifield : ',fieldState);
+      fieldState[id].value = value;
+      if (!fieldState[id].value) {
+        fieldState[id].errorMsg = "Field is required";
+      } else {
+        fieldState[id].errorMsg = "";
       }
-      
-        if(fieldState.required){
-          if(!fieldState.value){
-            fieldState.errorMsg = 'Field is required';
-          }else{
-            fieldState.errorMsg = '';
-          }
-        }
-      this.setState((prevState)=>{
-        prevState[stepKey]['fields'][path] = fieldState;
-        console.log(prevState);
-        return {...prevState};
-      });
-  }
+    }else {
+      fieldState = stepState.fields[path];
+      fieldState.value = value;
+    }                                                                                                                    
+
+    if (fieldState.required) {
+      if (!fieldState.value) {
+        fieldState.errorMsg = "Field is required";
+      } else {
+        fieldState.errorMsg = "";
+      }
+    }
+    this.setState((prevState) => {
+      prevState[stepKey]["fields"][path] = fieldState;
+      console.log(prevState);
+      return { ...prevState };
+    });
+  };
+  onAddBtnClick = (path) => {
+    const { activeStep } = this.state;
+    const stepKey = `step${activeStep + 1}`;
+    const stepState = this.state[stepKey];
+    let fieldState = stepState.fields[path];
+    console.log(fieldState);
+    fieldState.push(fieldState[0]);
+    this.setState((prevState) => {
+      prevState[stepKey]["fields"][path] = fieldState;
+      console.log(prevState);
+      return { ...prevState };
+    });
+  };
+
+  onDeleteBtnClick = (id,path) => {
+    const { activeStep } = this.state;
+    const stepKey = `step${activeStep + 1}`;
+    const stepState = this.state[stepKey];
+    let fieldState = stepState.fields[path];
+    console.log(fieldState);
+    fieldState.splice(id, 1);
+    this.setState((prevState) => {
+      prevState[stepKey]["fields"][path] = fieldState;
+      console.log(prevState);
+      return { ...prevState };
+    });
+    // const len = fieldState.length();
+    // items.splice(id, 1);
+    // setItems([...items]);
+  };
   render() {
     const { activeStep, step1 } = this.state;
     const steps = getSteps();
@@ -253,7 +317,15 @@ class CreateNetworkModel extends React.Component {
             </div>
           ) : (
             <div>
-              <Typography>{getStepContent(activeStep, step1,this.handleFieldChange)}</Typography>
+              <Typography>
+                {getStepContent(
+                  activeStep,
+                  step1,
+                  this.handleFieldChange,
+                  this.onAddBtnClick,
+                  this.onDeleteBtnClick
+                )}
+              </Typography>
               <div className="btnContainer">
                 <Button
                   disabled={activeStep === 0}

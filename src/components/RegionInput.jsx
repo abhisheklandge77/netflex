@@ -7,36 +7,46 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import "./component.scss";
 
 function RegionInput(props) {
-  const {  id,regionType, onAddBtnClick, onDeleteBtnClick } = props;
+  const {  id,item,onFieldChange,onAddBtnClick, onDeleteBtnClick } = props;
   return (
     <div>
       <Grid className="region-input-container">
         <div className={id===0 ? "inline-text-fields-first" : "inline-text-fields"}>
-          {id === 0 ? <AddCircleIcon className="add-icon" onClick={onAddBtnClick} /> : ''}
+          {id === 0 ? <AddCircleIcon className="add-icon" onClick={(e) =>onAddBtnClick('regionInput')} /> : ''}
           <Grid className="region-type-field">
             <Autocomplete
-              options={regionType}
+              options={item.regionType}
+              id="region-field"
               getOptionLabel={(region) => region.type}
               className="field"
+              onChange={(e,value) => {
+                onFieldChange(item.path,value,'multifield',id);
+              }}
               renderInput={(params) => (
-                <TextField {...params} label="Region Type" size="small" variant="outlined" />
+                <TextField {...params} label="Region Type *" id="region-type" size="small" variant="outlined" helperText={item.errorMsg}
+                error={item.errorMsg ? true : false} />
               )}
             />
           </Grid>
           <Grid className="region-field">
           <Autocomplete
-              options={regionType}
+              options={item.HighlightOffIconregionType}
+              id="region"
               className="field"
+              onChange={(e,value) => {
+                onFieldChange(item.path,value,'multifield',id);
+              }}
               getOptionLabel={(region) => region.region}
               renderInput={(params) => (
-                <TextField {...params} label="Region Type" size="small" variant="outlined" />
+                <TextField {...params} label="Region *" id="region" size="small" variant="outlined" helperText={item.errorMsg}
+                error={item.errorMsg ? true : false}/>
               )}
             />
           </Grid>
           {id > 0 ? (
             <HighlightOffIcon
               className="delete-icon"
-              onClick={() => onDeleteBtnClick(id)}
+              onClick={() => onDeleteBtnClick(id,'regionInput')}
             />
           ) : (
             ""

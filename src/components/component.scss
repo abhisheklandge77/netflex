@@ -1,7 +1,7 @@
 .network-model-container {
   width: 82%;
-  // max-height: 65vh;
-  // overflow: auto;
+  max-height: 65vh;
+  overflow: auto;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -32,7 +32,7 @@
     }
   }
   .inline-text-fields {
-    width: 100%;
+    width: 98%;
     padding-left: 25px;
     margin-bottom: 30px;
     display: flex;
@@ -63,7 +63,7 @@
       }
     }
     .file-input {
-      width: 18.5%;
+      width: 20%;
       .field {
         width: 100%;
       }
@@ -120,7 +120,7 @@
     margin-bottom: 20px;
   }
   .checkbox-container {
-    width: 100%;
+    width: 98%;
     padding-left: 25px;
     text-align: left;
     margin-bottom: 20px;
@@ -235,6 +235,181 @@
       .delete-icon {
         background-color: #fff;
         color: #1684de;
+      }
+    }
+  }
+}
+
+.disruption-reporting {
+  width: 82%;
+  margin: 0 auto;
+  height: 65vh;
+  overflow: auto;
+  .options-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .options {
+      width: 100%;
+    }
+  }
+  .title {
+    text-align: left;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .title h2 {
+    color: red;
+    font-weight: 600;
+    background-color: #f5f2f2;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}
+.summary {
+  width: 82%;
+  margin: 0 auto;
+  max-height: 65vh;
+  overflow: auto;
+  .title {
+    text-align: left;
+  }
+  .title h2 {
+    color: red;
+    font-weight: 600;
+    background-color: #f5f2f2;
+    padding-left: 20px;
+  }
+  .network-model-info {
+    width: 17%;
+    .MuiAccordionSummary-expandIcon {
+      position: absolute;
+      margin-left: 140px;
+    }
+    .heading {
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-align: left;
+    }
+    .edit-icon {
+      color: #1684de;
+      height: 30px;
+      width: 30px;
+      position: absolute;
+      right: 0;
+    }
+  }
+  .details {
+    display: flex;
+    flex-direction: column;
+    .row {
+      display: flex;
+      width: 100%;
+      .field {
+        display: flex;
+        width: 33.3%;
+        .label {
+          font-weight: 500;
+          font-size: 1.2rem;
+        }
+        .value {
+          color: #1684de;
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+  .network-parameters-info{
+    .header{
+      width : 30%;
+      .heading {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: left;
+      }
+      .edit-icon {
+        color: #1684de;
+        height: 30px;
+        width: 30px;
+        position: absolute;
+        right: 0;
+      }
+      .MuiAccordionSummary-expandIcon {
+        position: absolute;
+        margin-left: 330px;
+      }
+    }
+    .accordian-container{
+      width: 25%;
+      .accordian{
+        .heading{
+          font-size: 1.3rem;
+          font-weight: bold;
+        }
+        .details{
+          display: flex;
+          height: 230px;
+          .field{
+            text-align: left;
+            padding: 5px 0px;
+            .subdetails{
+              display: flex;
+            }
+            .label {
+              font-weight: 500;
+              font-size: 1.2rem;
+            }
+            .value {
+              color: #1684de;
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+    }
+  }
+  .disruption-reporting-info{
+    .header{
+      width : 22%;
+      .heading {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: left;
+      }
+      .edit-icon {
+        color: #1684de;
+        height: 30px;
+        width: 30px;
+        position: absolute;
+        right: 0;
+      }
+      .MuiAccordionSummary-expandIcon {
+        position: absolute;
+        margin-left: 215px;
+      }
+    }
+    .details {
+      display: flex;
+      flex-direction: column;
+      .row {
+        display: flex;
+        width: 100%;
+        .field {
+          display: flex;
+          width: 50%;
+          .label {
+            font-weight: 500;
+            font-size: 1.2rem;
+          }
+          .value {
+            color: #1684de;
+            font-size: 1.2rem;
+          }
+        }
       }
     }
   }
