@@ -31,7 +31,13 @@ function getSteps() {
   ];
 }
 
-function getStepContent(stepIndex, stepState, onFieldChange, onAddBtnClick,onDeleteBtnClick) {
+function getStepContent(
+  stepIndex,
+  stepState,
+  onFieldChange,
+  onAddBtnClick,
+  onDeleteBtnClick
+) {
   switch (stepIndex) {
     case 0:
       return (
@@ -185,16 +191,40 @@ class CreateNetworkModel extends React.Component {
             required: true,
           },
           regionInput: [
+            // {
+            //   path: "regionInput",
+            //   value: "",
+            //   errorMsg: "",
+            //   required: true,
+            //   regionType: [
+            //     { type: "Geographic", region: "NorthEast" },
+            //     { type: "ABC", region: "abc" },
+            //     { type: "XYZ", region: "xyz" },
+            //   ],
+            // },
             {
-              path: "regionInput",
-              value: "",
-              errorMsg: "",
-              required: true,
-              regionType: [
-                { type: "Geographic", region: "NorthEast" },
-                { type: "ABC", region: "abc" },
-                { type: "XYZ", region: "xyz" },
-              ],
+              regionType: {
+                path: "regionInput-regionType",
+                errorMsg: "",
+                valueList: [
+                  { type: "Geographic" },
+                  { type: "ABC" },
+                  { type: "XYZ" },
+                ],
+                value : "",
+                required : true,
+              },
+              region: {
+                path: "regionInput-region",
+                errorMsg: "",
+                valueList: [
+                  { region: "NorthEast" },
+                  { region: "abc" },
+                  { region: "xyz" },
+                ],
+                value : "",
+                required : true,
+              }
             },
           ],
           networkUtilizationParameters: {
@@ -225,7 +255,7 @@ class CreateNetworkModel extends React.Component {
   handleReset = () => {
     this.setState({ activeStep: 0 });
   };
-  handleFieldChange = (path, value, type,id) => {
+  handleFieldChange = (path, value, type, id) => {
     const { activeStep } = this.state;
     const stepKey = `step${activeStep + 1}`;
     const stepState = this.state[stepKey];
@@ -234,20 +264,21 @@ class CreateNetworkModel extends React.Component {
       const paths = path.split("-");
       fieldState = stepState.fields[paths[0]];
       fieldState.value[paths[1]] = value;
-    } 
-    else if(type === "multifield"){
-      fieldState = stepState.fields[path];
-      console.log('multifield : ',fieldState);
-      fieldState[id].value = value;
-      if (!fieldState[id].value) {
+    } else if (type === "multifield") {
+      const paths = path.split("-");
+      fieldState = stepState.fields[paths[0]];
+      // fieldState[id] = fieldState[id];
+      fieldState[id][paths[1]].value = value;
+      console.log("multifield : ", fieldState);
+      if (!fieldState[id][paths[1]].value) {
         fieldState[id].errorMsg = "Field is required";
       } else {
         fieldState[id].errorMsg = "";
       }
-    }else {
+    } else {
       fieldState = stepState.fields[path];
       fieldState.value = value;
-    }                                                                                                                    
+    }
 
     if (fieldState.required) {
       if (!fieldState.value) {
@@ -268,7 +299,11 @@ class CreateNetworkModel extends React.Component {
     const stepState = this.state[stepKey];
     let fieldState = stepState.fields[path];
     console.log(fieldState);
-    fieldState.push(fieldState[0]);
+    const stateOne = fieldState[0];
+    for(const field in stateOne){
+      stateOne[field].value = '';
+    }
+    fieldState.push({...stateOne});
     this.setState((prevState) => {
       prevState[stepKey]["fields"][path] = fieldState;
       console.log(prevState);
@@ -276,7 +311,7 @@ class CreateNetworkModel extends React.Component {
     });
   };
 
-  onDeleteBtnClick = (id,path) => {
+  onDeleteBtnClick = (id, path) => {
     const { activeStep } = this.state;
     const stepKey = `step${activeStep + 1}`;
     const stepState = this.state[stepKey];

@@ -15,12 +15,13 @@ function RegionInput(props) {
           {id === 0 ? <AddCircleIcon className="add-icon" onClick={(e) =>onAddBtnClick('regionInput')} /> : ''}
           <Grid className="region-type-field">
             <Autocomplete
-              options={item.regionType}
+              options={item.regionType.valueList}
               id="region-field"
               getOptionLabel={(region) => region.type}
               className="field"
+              value={item.regionType.value}
               onChange={(e,value) => {
-                onFieldChange(item.path,value,'multifield',id);
+                onFieldChange(item.regionType.path,value,'multifield',id);
               }}
               renderInput={(params) => (
                 <TextField {...params} label="Region Type *" id="region-type" size="small" variant="outlined" helperText={item.errorMsg}
@@ -30,11 +31,12 @@ function RegionInput(props) {
           </Grid>
           <Grid className="region-field">
           <Autocomplete
-              options={item.HighlightOffIconregionType}
+              options={item.region.valueList}
               id="region"
               className="field"
+              value={item.region.value}
               onChange={(e,value) => {
-                onFieldChange(item.path,value,'multifield',id);
+                onFieldChange(item.region.path,value,'multifield',id);
               }}
               getOptionLabel={(region) => region.region}
               renderInput={(params) => (
