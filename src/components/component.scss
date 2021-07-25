@@ -34,9 +34,14 @@
   .inline-text-fields {
     width: 98%;
     padding-left: 25px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     display: flex;
     align-items: center;
+    // border: 1px solid red;
+    .MuiFormHelperText-root.Mui-error{
+      position: absolute;
+      top: 40px;
+    }
     .network-id-field {
       width: 18%;
       .field {

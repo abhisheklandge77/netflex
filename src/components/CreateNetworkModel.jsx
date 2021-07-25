@@ -142,6 +142,7 @@ class CreateNetworkModel extends React.Component {
     super(props);
     this.state = {
       activeStep: 0,
+      isFormInvalid : true, 
       step1: {
         fields: {
           networkModelName: {
@@ -191,17 +192,6 @@ class CreateNetworkModel extends React.Component {
             required: true,
           },
           regionInput: [
-            // {
-            //   path: "regionInput",
-            //   value: "",
-            //   errorMsg: "",
-            //   required: true,
-            //   regionType: [
-            //     { type: "Geographic", region: "NorthEast" },
-            //     { type: "ABC", region: "abc" },
-            //     { type: "XYZ", region: "xyz" },
-            //   ],
-            // },
             {
               regionType: {
                 path: "regionInput-regionType",
@@ -271,9 +261,9 @@ class CreateNetworkModel extends React.Component {
       fieldState[id][paths[1]].value = value;
       console.log("multifield : ", fieldState);
       if (!fieldState[id][paths[1]].value) {
-        fieldState[id].errorMsg = "Field is required";
+        fieldState[id][paths[1]].errorMsg = "Field is required";
       } else {
-        fieldState[id].errorMsg = "";
+        fieldState[id][paths[1]].errorMsg = "";
       }
     } else {
       fieldState = stepState.fields[path];
@@ -281,29 +271,47 @@ class CreateNetworkModel extends React.Component {
     }
 
     if (fieldState.required) {
-      if (!fieldState.value) {
+      if(path === 'idList'){
+        if(fieldState.value.length === 0){
+          fieldState.errorMsg = "Field is required";
+        }
+      }
+      else if (!fieldState.value) {
         fieldState.errorMsg = "Field is required";
       } else {
         fieldState.errorMsg = "";
       }
     }
+    const isFormInvalid = this.checkAllFieldsValid(stepState.fields);
     this.setState((prevState) => {
+      prevState["isFormInvalid"] = isFormInvalid;
       prevState[stepKey]["fields"][path] = fieldState;
       console.log(prevState);
       return { ...prevState };
     });
   };
+  checkAllFieldsValid = (fieldState) => {
+    let allFieldsValid = false;
+    for(let field in fieldState){
+      if(field.errorMsg){
+        allFieldsValid = true;
+        break;
+      }
+    }
+    return allFieldsValid;
+  }
   onAddBtnClick = (path) => {
     const { activeStep } = this.state;
     const stepKey = `step${activeStep + 1}`;
     const stepState = this.state[stepKey];
     let fieldState = stepState.fields[path];
     console.log(fieldState);
-    const stateOne = fieldState[0];
-    for(const field in stateOne){
+    const stateOne = JSON.parse(JSON.stringify(fieldState[0]));
+    for(let field in stateOne){
       stateOne[field].value = '';
+      stateOne[field].errorMsg = '';
     }
-    fieldState.push({...stateOne});
+    fieldState.push(stateOne);
     this.setState((prevState) => {
       prevState[stepKey]["fields"][path] = fieldState;
       console.log(prevState);
@@ -323,12 +331,9 @@ class CreateNetworkModel extends React.Component {
       console.log(prevState);
       return { ...prevState };
     });
-    // const len = fieldState.length();
-    // items.splice(id, 1);
-    // setItems([...items]);
   };
   render() {
-    const { activeStep, step1 } = this.state;
+    const { activeStep, step1,isFormInvalid } = this.state;
     const steps = getSteps();
 
     return (
@@ -372,6 +377,7 @@ class CreateNetworkModel extends React.Component {
                 <Button
                   variant="contained"
                   className="nextBtn"
+                  disabled={isFormInvalid}
                   onClick={this.handleNext}
                 >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}

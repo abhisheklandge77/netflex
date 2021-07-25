@@ -24,8 +24,8 @@ function RegionInput(props) {
                 onFieldChange(item.regionType.path,value,'multifield',id);
               }}
               renderInput={(params) => (
-                <TextField {...params} label="Region Type *" id="region-type" size="small" variant="outlined" helperText={item.errorMsg}
-                error={item.errorMsg ? true : false} />
+                <TextField {...params} label="Region Type *" id="region-type" size="small" variant="outlined" helperText={item.regionType.errorMsg}
+                error={item.regionType.errorMsg ? true : false} />
               )}
             />
           </Grid>
@@ -40,8 +40,8 @@ function RegionInput(props) {
               }}
               getOptionLabel={(region) => region.region}
               renderInput={(params) => (
-                <TextField {...params} label="Region *" id="region" size="small" variant="outlined" helperText={item.errorMsg}
-                error={item.errorMsg ? true : false}/>
+                <TextField {...params} label="Region *" id="region" size="small" variant="outlined" helperText={item.region.errorMsg}
+                error={item.region.errorMsg ? true : false}/>
               )}
             />
           </Grid>
